@@ -30,7 +30,9 @@ pub fn render_bordered(lines: &[Line], theme: &Theme) -> String {
     );
 
     let mut out = String::with_capacity(256 * lines.len());
-    out.push_str(&format!("<span foreground='{border}'>╭{border_h}╮</span>\n"));
+    out.push_str(&format!(
+        "<span foreground='{border}'>╭{border_h}╮</span>\n"
+    ));
     for line in lines {
         let body = match line {
             Line::Body(s) => pad_right(s, inner_w),

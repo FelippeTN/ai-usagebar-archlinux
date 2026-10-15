@@ -23,9 +23,11 @@ Mostra os limites de uso do **Claude Code** (sessão de 5h, semanal, Sonnet, lim
 ## Instalação
 
 ```sh
-sudo pacman -S rustup && rustup default stable
+sudo pacman -S --needed rustup make
 make install          # instala em ~/.local/bin
 ```
+
+Não é preciso rodar `rustup default`: o `rust-toolchain.toml` do repositório faz o rustup baixar e usar a versão stable sozinho. O `Cargo.lock` versionado garante as mesmas versões de dependências que foram testadas.
 
 ### Waybar (HyDE)
 

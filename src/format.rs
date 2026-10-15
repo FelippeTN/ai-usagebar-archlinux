@@ -15,11 +15,10 @@ pub fn substitute(template: &str, values: &HashMap<String, String>) -> String {
     while let Some(open) = rest.find('{') {
         out.push_str(&rest[..open]);
         let after = &rest[open + 1..];
-        match after.find('}').and_then(|close| {
-            values
-                .get(&after[..close])
-                .map(|value| (close, value))
-        }) {
+        match after
+            .find('}')
+            .and_then(|close| values.get(&after[..close]).map(|value| (close, value)))
+        {
             Some((close, value)) => {
                 out.push_str(value);
                 rest = &after[close + 1..];
@@ -136,7 +135,10 @@ mod tests {
     use super::*;
 
     fn map(pairs: &[(&str, &str)]) -> HashMap<String, String> {
-        pairs.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect()
+        pairs
+            .iter()
+            .map(|(k, v)| (k.to_string(), v.to_string()))
+            .collect()
     }
 
     #[test]

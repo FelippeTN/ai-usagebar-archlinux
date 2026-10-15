@@ -177,7 +177,11 @@ mod tests {
             assert_eq!(visible_width(&bar), BAR_LEN as usize, "pct {pct}");
             for marker in [0, 50, 100] {
                 let bar = progress_bar(pct, "#fff", &t, Some(marker));
-                assert_eq!(visible_width(&bar), BAR_LEN as usize, "pct {pct} m {marker}");
+                assert_eq!(
+                    visible_width(&bar),
+                    BAR_LEN as usize,
+                    "pct {pct} m {marker}"
+                );
             }
         }
         let half = strip_markup(&progress_bar(50, "#fff", &t, None));
@@ -195,6 +199,9 @@ mod tests {
 
     #[test]
     fn strip_markup_round_trips_escape() {
-        assert_eq!(strip_markup(&color_span("#fff", &escape("1 < 2 & 3"))), "1 < 2 & 3");
+        assert_eq!(
+            strip_markup(&color_span("#fff", &escape("1 < 2 & 3"))),
+            "1 < 2 & 3"
+        );
     }
 }

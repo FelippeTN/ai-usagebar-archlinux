@@ -261,8 +261,5 @@ fn draw_meter(
             .use_unicode(true),
         gauge,
     );
-    f.render_widget(
-        Paragraph::new(detail).style(Style::new().fg(p.dim)),
-        foot,
-    );
+    f.render_widget(Paragraph::new(detail).style(Style::new().fg(p.dim)), foot);
 }

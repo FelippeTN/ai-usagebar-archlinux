@@ -62,7 +62,7 @@ impl Theme {
     }
 
     pub fn apply_wallbash(&mut self, colors: &HashMap<String, String>) {
-        let mut set = |slot: &mut String, key: &str| {
+        let set = |slot: &mut String, key: &str| {
             if let Some(c) = colors.get(key) {
                 *slot = c.clone();
             }
@@ -107,9 +107,8 @@ pub fn parse_defines(css: &str) -> HashMap<String, String> {
 }
 
 pub fn is_hex_color(s: &str) -> bool {
-    s.strip_prefix('#').is_some_and(|hex| {
-        matches!(hex.len(), 6 | 8) && hex.bytes().all(|b| b.is_ascii_hexdigit())
-    })
+    s.strip_prefix('#')
+        .is_some_and(|hex| matches!(hex.len(), 6 | 8) && hex.bytes().all(|b| b.is_ascii_hexdigit()))
 }
 
 #[cfg(test)]

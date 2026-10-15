@@ -94,7 +94,12 @@ fn placeholders(input: &RenderInput) -> HashMap<String, String> {
             Some(w) => (
                 w.utilization_pct.to_string(),
                 countdown::format(w.resets_at, input.now),
-                pango::progress_bar(w.utilization_pct, pct_color(w.utilization_pct, theme), theme, None),
+                pango::progress_bar(
+                    w.utilization_pct,
+                    pct_color(w.utilization_pct, theme),
+                    theme,
+                    None,
+                ),
             ),
             None => ("0".into(), "—".into(), String::new()),
         };
@@ -158,7 +163,13 @@ fn placeholders(input: &RenderInput) -> HashMap<String, String> {
 }
 
 /// Icon + label, bar + bold percentage (+ pace glyph), dim reset countdown.
-fn push_window(lines: &mut Vec<Line>, icon: &str, label: &str, w: &UsageWindow, input: &RenderInput) {
+fn push_window(
+    lines: &mut Vec<Line>,
+    icon: &str,
+    label: &str,
+    w: &UsageWindow,
+    input: &RenderInput,
+) {
     let theme = input.theme;
     let pace = pace_of(w, input);
     let color = pct_color(w.utilization_pct, theme);
@@ -210,7 +221,13 @@ fn default_tooltip(input: &RenderInput) -> String {
     }
     for s in &snap.scoped {
         lines.push(Line::Body(String::new()));
-        push_window(&mut lines, "󰆧", &format!("{} semanal", s.label), &s.window, input);
+        push_window(
+            &mut lines,
+            "󰆧",
+            &format!("{} semanal", s.label),
+            &s.window,
+            input,
+        );
     }
 
     if let Some(extra) = &snap.extra {
@@ -240,11 +257,15 @@ fn default_tooltip(input: &RenderInput) -> String {
         lines.push(Line::Body(format!(
             " <span foreground='{fg}'>  󰁯  Resets bancados</span>"
         )));
+        // Grant labels are long marketing sentences; wrap so they do not
+        // stretch the whole tooltip.
         for line in reset_credit_lines(&snap.reset_credits, input.now) {
-            lines.push(Line::Body(format!(
-                " <span foreground='{dim}'>     {}</span>",
-                escape(&line)
-            )));
+            for wrapped in wrap_words(&line, 38) {
+                lines.push(Line::Body(format!(
+                    " <span foreground='{dim}'>     {}</span>",
+                    escape(&wrapped)
+                )));
+            }
         }
     }
 
@@ -413,7 +434,11 @@ mod tests {
     fn custom_formats_and_unknown_keys() {
         let o = outcome(FULL, false, None);
         let t = Theme::default();
-        let mut i = input(&o, &t, "{plan} S{session_pct} W{weekly_pct} {sonnet_pct} {scoped_pct} {nope}");
+        let mut i = input(
+            &o,
+            &t,
+            "{plan} S{session_pct} W{weekly_pct} {sonnet_pct} {scoped_pct} {nope}",
+        );
         i.icon = None;
         i.tooltip_format = Some("{weekly_reset} {extra_spent}/{extra_limit} {session_pace_pts}");
         let out = render(&i);
@@ -428,7 +453,10 @@ mod tests {
         let mut i = input(&o, &t, "{session_pace_pts}");
         i.format_pace_color = true;
         let out = render(&i);
-        assert!(out.text.starts_with(&format!("<span foreground='{}'>", t.fg)));
+        assert!(
+            out.text
+                .starts_with(&format!("<span foreground='{}'>", t.fg))
+        );
         // 70% elapsed, 62% used: delta -8 -> mid pace color.
         assert!(out.text.contains(&t.yellow));
     }

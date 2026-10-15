@@ -154,16 +154,42 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let s = tmp.path().join("sessions");
         fs::create_dir(&s).unwrap();
-        write(&s, "1.json", r#"{"pid":1,"kind":"interactive","status":"busy","pidDomain":"linux:abc"}"#);
-        write(&s, "2.json", r#"{"pid":2,"kind":"interactive","status":"waiting"}"#);
-        write(&s, "3.json", r#"{"pid":3,"kind":"interactive","status":"idle"}"#);
-        write(&s, "4.json", r#"{"pid":4,"entrypoint":"sdk-ts","status":"busy"}"#);
+        write(
+            &s,
+            "1.json",
+            r#"{"pid":1,"kind":"interactive","status":"busy","pidDomain":"linux:abc"}"#,
+        );
+        write(
+            &s,
+            "2.json",
+            r#"{"pid":2,"kind":"interactive","status":"waiting"}"#,
+        );
+        write(
+            &s,
+            "3.json",
+            r#"{"pid":3,"kind":"interactive","status":"idle"}"#,
+        );
+        write(
+            &s,
+            "4.json",
+            r#"{"pid":4,"entrypoint":"sdk-ts","status":"busy"}"#,
+        );
         write(&s, "5.json", r#"{"pid":6,"status":"busy"}"#); // pid mismatch
         write(&s, "999.json", r#"{"pid":999,"status":"busy"}"#); // dead
-        write(&s, "7.json", r#"{"pid":7,"status":"busy","pidDomain":"darwin:x"}"#);
+        write(
+            &s,
+            "7.json",
+            r#"{"pid":7,"status":"busy","pidDomain":"darwin:x"}"#,
+        );
         write(&s, "8.abc.key", "x");
         let a = scan(tmp.path(), &AllAlive);
-        assert_eq!(a, SessionActivity { working: 1, waiting: 1 });
+        assert_eq!(
+            a,
+            SessionActivity {
+                working: 1,
+                waiting: 1
+            }
+        );
         assert_eq!(a.summary().unwrap(), "󰚩  1 trabalhando · 1 aguardando você");
         assert_eq!(SessionActivity::default().summary(), None);
     }

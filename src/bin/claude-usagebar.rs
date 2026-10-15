@@ -121,7 +121,11 @@ fn main() {
         }
     };
 
-    let ttl = if cli.refresh { Duration::ZERO } else { DEFAULT_TTL };
+    let ttl = if cli.refresh {
+        Duration::ZERO
+    } else {
+        DEFAULT_TTL
+    };
     match cli.watch {
         Some(secs) => rt.block_on(async {
             let period = Duration::from_secs(secs.max(5));

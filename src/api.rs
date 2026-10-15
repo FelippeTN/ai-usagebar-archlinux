@@ -79,10 +79,16 @@ mod tests {
     #[test]
     fn error_body_shapes() {
         assert_eq!(
-            parse_error_body(r#"{"type":"error","error":{"type":"rate_limit_error","message":"Rate limited"}}"#).as_deref(),
+            parse_error_body(
+                r#"{"type":"error","error":{"type":"rate_limit_error","message":"Rate limited"}}"#
+            )
+            .as_deref(),
             Some("Rate limited")
         );
-        assert_eq!(parse_error_body(r#"{"error":"bad"}"#).as_deref(), Some("bad"));
+        assert_eq!(
+            parse_error_body(r#"{"error":"bad"}"#).as_deref(),
+            Some("bad")
+        );
         assert_eq!(
             parse_error_body(r#"{"error":"x","error_description":"why"}"#).as_deref(),
             Some("why")

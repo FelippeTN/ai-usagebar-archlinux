@@ -354,8 +354,14 @@ mod tests {
 
     #[test]
     fn extra_usage_validation() {
-        assert!(parse(r#"{"extra_usage":{"is_enabled":true,"used_credits":1,"currency":"<b>"}}"#).is_err());
-        assert!(parse(r#"{"extra_usage":{"is_enabled":true,"used_credits":1,"decimal_places":9}}"#).is_err());
+        assert!(
+            parse(r#"{"extra_usage":{"is_enabled":true,"used_credits":1,"currency":"<b>"}}"#)
+                .is_err()
+        );
+        assert!(
+            parse(r#"{"extra_usage":{"is_enabled":true,"used_credits":1,"decimal_places":9}}"#)
+                .is_err()
+        );
         assert!(parse(r#"{"extra_usage":{"is_enabled":true,"used_credits":-5}}"#).is_err());
         let s = parse(r#"{"extra_usage":{"is_enabled":true,"monthly_limit":null,"used_credits":14157.0,"currency":"USD","decimal_places":2}}"#)
             .unwrap()

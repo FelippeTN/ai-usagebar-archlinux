@@ -41,7 +41,10 @@ impl App {
     pub fn pending_refresh(&self) -> Option<bool> {
         if self.force_refresh {
             Some(true)
-        } else if self.last_attempt.is_none_or(|t| t.elapsed() >= AUTO_REFRESH) {
+        } else if self
+            .last_attempt
+            .is_none_or(|t| t.elapsed() >= AUTO_REFRESH)
+        {
             Some(false)
         } else {
             None
