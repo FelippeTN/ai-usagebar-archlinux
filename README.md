@@ -59,6 +59,14 @@ As classes CSS emitidas são `low`, `mid`, `high` e `critical`, mais `stale` (da
 
 O arquivo de configuração é opcional e fica em `~/.config/claude-usagebar/config.toml`. Veja [config.example.toml](config.example.toml) com todas as chaves e placeholders.
 
+## Aviso
+
+O endpoint `/api/oauth/usage` não é documentado nem suportado oficialmente pela Anthropic. Ele pode mudar ou deixar de funcionar sem aviso. Se o User-Agent mínimo exigido mudar, ajuste `user_agent` no config.
+
+## Licença
+
+MIT, veja [LICENSE](LICENSE). Derivado do [ai-usagebar](https://github.com/akitaonrails/ai-usagebar) de AkitaOnRails, também sob MIT.
+
 ## Desenvolvimento
 
 ```sh
