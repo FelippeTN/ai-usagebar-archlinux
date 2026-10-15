@@ -1,0 +1,13 @@
+// Copie para ~/.config/waybar/modules/custom-claude.jsonc
+// (o config.jsonc do HyDE inclui $XDG_CONFIG_HOME/waybar/modules/*json*).
+{
+  "custom/claude": {
+    "exec": "~/.local/bin/claude-usagebar",
+    "return-type": "json",
+    "interval": 300,
+    "signal": 13,
+    "tooltip": true,
+    "on-click": "kitty --class claude-usagebar-tui -e ~/.local/bin/claude-usagebar-tui",
+    "on-click-right": "~/.local/bin/claude-usagebar --refresh --json >/dev/null"
+  }
+}

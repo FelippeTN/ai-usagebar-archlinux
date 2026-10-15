@@ -1,0 +1,43 @@
+[package]
+name = "claude-usagebar"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Claude Code usage limits for Waybar (Hyprland/HyDE), with a ratatui dashboard"
+license = "MIT"
+
+[lib]
+name = "claude_usagebar"
+path = "src/lib.rs"
+
+[[bin]]
+name = "claude-usagebar"
+path = "src/bin/claude-usagebar.rs"
+
+[[bin]]
+name = "claude-usagebar-tui"
+path = "src/bin/claude-usagebar-tui.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["rt", "macros", "time", "fs"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls", "rustls-tls-native-roots"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+clap = { version = "4", features = ["derive", "env"] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+fs2 = "0.4"
+tempfile = "3"
+directories = "6"
+thiserror = "2"
+toml = "1"
+unicode-width = "0.2"
+ratatui = "0.30"
+
+[dev-dependencies]
+mockito = "1"
+pretty_assertions = "1"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

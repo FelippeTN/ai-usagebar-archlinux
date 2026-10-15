@@ -1,0 +1,39 @@
+# ~/.config/claude-usagebar/config.toml — todas as chaves são opcionais.
+# Flags de linha de comando sempre têm prioridade sobre este arquivo.
+
+# Texto da barra. Placeholders: {session_pct} {session_reset} {session_bar}
+# {session_elapsed} {session_pace} {session_pace_indicator} {session_pace_pct}
+# {session_pace_pts} {session_pace_delta} {session_pace_abs_delta}, os mesmos
+# com weekly_ / sonnet_ / scoped_, e {scoped_model} {plan} {extra_spent}
+# {extra_limit} {extra_pct} {extra_bar} {resets_available} {resets} {icon}.
+format = "{session_pct}% · {session_reset}"
+
+# Tooltip customizado (sem esta chave: a caixa padrão com todas as janelas).
+# tooltip_format = "Sessão {session_pct}% · Semana {weekly_pct}%"
+
+# Ícone antes do texto ("" desliga).
+icon = "󰚩"
+
+# Tolerância (em pontos %) para o indicador de ritmo ↑ → ↓.
+pace_tolerance = 5
+
+# Colore os placeholders {*_pace*} pelo ritmo, não o texto inteiro pelo uso.
+format_pace_color = false
+
+# Tooltip com delta em pontos e marcador de tempo decorrido nas barras.
+tooltip_pace_pts = false
+
+# Cores neutras (texto, borda, cinza) vindas do wallbash do HyDE.
+wallbash = true
+
+# credentials_path = "~/.claude/.credentials.json"
+# cache_dir = "~/.cache/claude-usagebar"
+
+# Se a API passar a exigir uma versão mais nova do Claude Code:
+# user_agent = "claude-cli/2.1.281 (external, cli)"
+
+[colors]
+# low = "#98c379"
+# mid = "#e5c07b"
+# high = "#d19a66"
+# critical = "#e06c75"
