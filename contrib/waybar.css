@@ -1,4 +1,4 @@
-/* Acrescente em ~/.config/waybar/user-style.css */
+/* claude-usagebar:begin */
 #custom-claude {
   padding: 0 8px;
 }
@@ -8,3 +8,4 @@
 #custom-claude.stale {
   opacity: 0.7;
 }
+/* claude-usagebar:end */

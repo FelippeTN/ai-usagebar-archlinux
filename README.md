@@ -29,21 +29,25 @@ make install          # instala em ~/.local/bin
 
 Não é preciso rodar `rustup default`: o `rust-toolchain.toml` do repositório faz o rustup baixar e usar a versão stable sozinho. O `Cargo.lock` versionado garante as mesmas versões de dependências que foram testadas.
 
-### Waybar (HyDE)
+### Integração com Waybar e Hyprland
 
-1. Copie o módulo:
-   ```sh
-   mkdir -p ~/.config/waybar/modules
-   cp contrib/custom-claude.jsonc ~/.config/waybar/modules/
-   ```
-2. Acrescente `"custom/claude"` a um dos grupos em `~/.config/waybar/config.jsonc`, por exemplo no `group/pill#right2`.
-   > O HyDE regenera o `config.jsonc` quando você troca de layout. Para não perder o módulo, salve uma cópia do layout em `~/.config/waybar/layouts/`.
-3. Cole `contrib/waybar.css` em `~/.config/waybar/user-style.css`.
-4. Recarregue: `killall -SIGUSR2 waybar`.
+```sh
+make setup            # = make install + contrib/setup.sh
+```
 
-### Hyprland (TUI flutuante)
+O script pode ser rodado de novo sem duplicar nada. Ele:
 
-Cole `contrib/hyprland.lua` no final de `~/.config/hypr/hyprland.lua`.
+- copia o módulo para `~/.config/waybar/modules/custom-claude.jsonc`;
+- acrescenta o CSS em `~/.config/waybar/user-style.css`;
+- **no HyDE**, cria `~/.config/waybar/layouts/<seu layout>#claude.jsonc`, uma cópia do layout ativo com o módulo, e ativa esse layout. Isso é necessário porque o HyDE recopia o layout ativo por cima do `config.jsonc` a cada troca de papel de parede ou de tema; layouts em `~/.config/waybar/layouts/` nunca são sobrescritos;
+- acrescenta a regra da janela flutuante do painel em `~/.config/hypr/hyprland.lua`;
+- recarrega o Waybar.
+
+Para desfazer: `make unsetup` (restaura o layout anterior e remove os blocos adicionados).
+
+Sem HyDE, o script avisa e você acrescenta `"custom/claude"` a `modules-right` no seu `config.jsonc`. Com Hyprland no formato antigo (`hyprland.conf`), adapte para a sua versão a regra de `contrib/hyprland.lua` (janela flutuante, centralizada, 875x600, classe `claude-usagebar-tui`).
+
+> Se você trocar de layout pelo seletor do HyDE, o módulo some; rode `make setup` de novo.
 
 ## Uso
 

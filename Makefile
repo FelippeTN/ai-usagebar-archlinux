@@ -1,7 +1,7 @@
 PREFIX ?= $(HOME)/.local
 BINS := claude-usagebar claude-usagebar-tui
 
-.PHONY: build test lint install uninstall
+.PHONY: build test lint install uninstall setup unsetup
 
 build:
 	cargo build --release --locked
@@ -19,3 +19,10 @@ install: build
 
 uninstall:
 	@for b in $(BINS); do rm -f $(PREFIX)/bin/$$b; done
+
+# Instala e integra ao Waybar/HyDE e ao Hyprland (veja contrib/setup.sh).
+setup: install
+	PREFIX=$(PREFIX) bash contrib/setup.sh
+
+unsetup:
+	bash contrib/setup.sh --uninstall

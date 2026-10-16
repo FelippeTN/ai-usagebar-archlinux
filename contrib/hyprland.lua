@@ -1,4 +1,4 @@
--- Acrescente em ~/.config/hypr/hyprland.lua
+-- claude-usagebar:begin
 hl.window_rule({
   name = "claude_usagebar_tui",
   match = { class = "^(claude-usagebar-tui)$" },
@@ -6,3 +6,4 @@ hl.window_rule({
   center = true,
   size = "875 600",
 })
+-- claude-usagebar:end
